@@ -1,0 +1,37 @@
+{
+  "pages":[
+    "pages/index/index",
+    "pages/alllist/alllist",
+    "pages/mylist/mylist"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#576b95",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle":"white"
+  },
+  "tabBar": {
+    "color": "#fff",
+    "selectedColor": "#aaa",
+    "backgroundColor": "#576b95",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "Bili",
+        "iconPath": "images/phone.png",
+        "selectedIconPath": "images/phone-select.png"
+      },
+      {
+        "pagePath": "pages/alllist/alllist",
+        "text": "Bala",
+        "iconPath": "images/cloud-computing.png",
+        "selectedIconPath": "images/cloud-select.png"
+      }
+    ]
+  },
+  "networkTimeout": {
+    "request": 10000,
+    "downloadFile": 10000
+  }
+}

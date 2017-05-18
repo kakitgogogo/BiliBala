@@ -1,0 +1,101 @@
+/* pages/mylist/mylist.wxss */
+
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.userinfo-avatar {
+  width: 128rpx;
+  height: 128rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+
+.userinfo-nickname {
+  color: #000;
+}
+
+
+.records-list{
+  background-color: #fff;
+  position: absolute;
+  top: 320rpx;
+  bottom: 0;
+}
+
+.section{
+  height: 50rpx;
+  text-align: center;
+}
+
+.section image{
+  height: 50rpx;
+  width: 50rpx;
+}
+
+.item-wrapper {
+  width: 100%;
+  height: 88rpx;
+  border-bottom: 1rpx solid rgb(233, 233, 233);
+  position: relative;
+  left:0;
+  top:0;
+  overflow: hidden;
+}
+
+.record-wrapper{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: white;
+  z-index: 100;
+  transition: left 0.2s ease-in-out;
+}
+
+.record-wrapper image{
+  display: block;
+  position: absolute;
+  left: 22rpx;
+  top: 20rpx;
+  bottom: 20rpx;
+  height: 60rpx;
+  width: 60rpx;
+}
+
+.oper-wrapper{
+  position: absolute;
+  width: 100%;
+  height: 88rpx;
+  left:0;
+  top:0;
+}
+
+.oper-delete{
+  position: absolute;
+  width: 150rpx;
+  height: 88rpx;
+  top: 1rpx;
+  right: 0;
+  background-color: #e63240;
+  color:#FFF;
+  text-align: center;
+  line-height: 88rpx;
+  z-index: 0;
+}
+
+.oper-share{
+  position: absolute;
+  width: 150rpx;
+  height: 88rpx;
+  top: 1rpx;
+  right: 150rpx;
+  background-color: #576b95;
+  color:#FFF;
+  text-align: center;
+  line-height: 88rpx;
+  z-index: 50;
+}

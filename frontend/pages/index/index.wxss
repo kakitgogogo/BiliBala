@@ -1,0 +1,53 @@
+/**index.wxss**/
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.userinfo-avatar {
+  width: 128rpx;
+  height: 128rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+
+.userinfo-nickname {
+  color: #000;
+}
+
+.record-form {
+  margin-top: 20rpx;
+}
+.record-switch{
+  background-color: #fff;
+}
+
+.tip{
+  text-align: center;
+}
+
+.big-btn{
+  padding-top: 35rpx;
+  text-align: center;
+}
+
+.big-btn image{
+  width: 128rpx;
+  height: 128rpx;
+  border-radius: 50%;
+  border: 1px solid #576b95;
+}
+
+.upload-btn {
+  margin: 20rpx;
+  color: #7ecef4;
+  background-color: white;
+  border: 1px solid #576b95;
+}
+
+.upload-btn i {
+  text-align: center;
+  font-family: MicroSoft Yahei;
+  font-size: 24rpx;
+}

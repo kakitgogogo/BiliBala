@@ -1,0 +1,25 @@
+<!--pages/mylist/mylist.wxml-->
+<view class="container">
+  <view  bindtap="bindViewTap" class="userinfo">
+    <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+    <text class="userinfo-nickname">{{userInfo.nickName}}的声音</text>
+  </view>
+
+  <scroll-view class="records-list" scroll-y="true" bindscrolltoupper="refreshList" bindscrolltolower="appendList" upper-threshold="0" lower-threshold="20">
+    <view class="section" style="padding: 20rpx 0 0; height: 0; opacity: 0;" animation="{{loadingAnimation}}">
+      <image src="/images/loading.gif"></image>
+    </view>
+    <view class="item-wrapper" wx:for="{{records}}" wx:key="id"  wx:for-item="record" wx:for-index="index">
+      <view class="record-wrapper" data-index="{{index}}" data-src="{{record.src}}" bindtap="play" bindtouchstart="touchS" bindtouchmove="touchM" bindtouchend="touchE" style="left:{{record.left+'rpx'}}; {{isPlaying&&record.src==playingSrc?'background: rgb(233,233,233)':'background: white'}};">
+        <image src="{{isPlaying && record.src == playingSrc ? playUi.playing : playUi.play}}"></image>
+      </view>
+      <view class="oper-wrapper">
+        <view class="oper-delete" bindtap="deleteRecord" data-index="{{index}}" data-src="{{record.src}}">删除</view>
+        <view class="oper-share" bindtap="shareRecord" data-index="{{index}}" data-src="{{record.src}}">分享</view>
+      </view>
+    </view>
+    <view class="section" style="padding: 20rpx: 20rpx 0 0; height: 0; opacity: 0;" animation="{{nomoreAnimation}}">
+      <text>...no more</text>
+    </view>
+  </scroll-view>
+</view>

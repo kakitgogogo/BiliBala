@@ -1,0 +1,37 @@
+<!--index.wxml-->
+<view class="container">
+  <view  bindtap="bindViewTap" class="userinfo">
+    <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+    <text class="userinfo-nickname">{{userInfo.nickName}}的声音</text>
+  </view>
+  <view class="record-form">
+    <view class="record-switch">
+      <view class="big-btn" bindlongtap="startRecord" bindtouchend="stopRecord" bindtouchcancel="stopRecord">
+        <image style="width:{{recordRadius}}rpx; height:{{recordRadius}}rpx" src="{{recordUi.record}}"></image>
+      </view>
+      <view class="tip">
+        <text>录音</text>
+      </view>
+    </view>
+  </view>
+  <view class="record-form">
+    <view class="record-switch">
+      <view class="big-btn"  bindtap="playRecord">
+        <image style="width:{{playRadius}}rpx; height:{{playRadius}}rpx" src="{{isPlaying?playUi.playing:playUi.play}}"></image>
+      </view>
+      <view class="tip">
+        <text>播放</text>
+      </view>
+    </view>
+  </view>
+  <view class="record-form">
+    <view class="record-switch">
+      <view class="big-btn"  bindtap="uploadRecord">
+        <image style="width:{{uploadRadius}}rpx; height:{{uploadRadius}}rpx" src="{{isUploading?uploadUi.uploading:uploadUi.upload}}"></image>
+      </view>
+      <view class="tip">
+        <text>上传{{isUploadDone?"成功":""}}</text>
+      </view>
+    </view>
+  </view>
+</view>

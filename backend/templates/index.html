@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}YuYin{% endblock %}
+{% block head %}
+	{{ super() }}
+{% endblock %}
+
+{% block content %}
+
+<form method="post" action="{{ url_for('main.upload_image') }}" enctype="multipart/form-data">
+	<div class="form-group">
+		<label>File input</label>
+		<input type="file" name="file">
+		<p class="help-block">choose image</p>
+	</div>
+		<input class="btn btn-default" type="submit" value="Submit">
+</form>
+
+{% endblock %}
