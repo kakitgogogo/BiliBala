@@ -19,13 +19,24 @@ module.exports = {
     uploadUrl: 'https://kakit.top/upload/voice',
 
     // 删除接口
-    deleteUrl: 'https://kakit.top/delete',
+    deleteUrl: 'https://kakit.top/delete/voice',
+
+    // 分享接口
+    shareUrl: 'https://kakit.top/share',
+
+    // 评论接口
+    commentUrl: 'https://kakit.top/comment/voice',
+
+    //点赞接口
+    likeUrl: 'https://kakit.top/like/voice',
 
     // 查看接口
     viewUrl: 'https://kakit.top/view/voice',
     viewAllUrl: 'https://kakit.top/viewall/voice',
+    viewCommentsUrl: 'https://kakit.top/comments/voice',
 
     // 搜索接口
-    searchUrl: 'https://kakit.top/search/voice'
+    searchUrl: 'https://kakit.top/search/voice',
+
   }
 }

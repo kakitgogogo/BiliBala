@@ -3,3 +3,6 @@ image
 voice
 nohup.out
 aes-sample
+__pycache__
+log
+

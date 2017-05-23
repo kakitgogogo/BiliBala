@@ -25,20 +25,36 @@
   bottom: 0;
 }
 
-.section{
+.loading{
   height: 50rpx;
   text-align: center;
+  z-index: 100;
 }
 
-.section image{
+.loading image{
   height: 50rpx;
   width: 50rpx;
 }
 
+.no-more {
+  height: 80rpx;
+  text-align: center;
+  line-height: 80rpx;
+  background-color:  #f2f1f6;
+}
+
+.time-wrapper {
+  height: 40rpx;
+  line-height: 40rpx;
+  width: 100%;
+  text-align: center;
+  background-color: #f2f1f6;
+}
+
 .item-wrapper {
   width: 100%;
-  height: 88rpx;
-  border-bottom: 1rpx solid rgb(233, 233, 233);
+  height: 140rpx;
+  border-bottom: 2rpx solid #f2f1f6;
   position: relative;
   left:0;
   top:0;
@@ -66,18 +82,35 @@
   width: 60rpx;
 }
 
+.record-wrapper text {
+  display: block;
+  position: absolute;
+  left: 110rpx;
+  top: 22rpx;
+  width: 80%;
+  text-overflow: ellipsis;
+}
+
 .oper-wrapper{
   position: absolute;
   width: 100%;
-  height: 88rpx;
+  height: 100%;
   left:0;
   top:0;
+}
+
+.oper-image {
+  position: absolute;
+  top: 75rpx;
+  right: 57rpx;
+  width: 36rpx;
+  height: 36rpx;
 }
 
 .oper-delete{
   position: absolute;
   width: 150rpx;
-  height: 88rpx;
+  height: 100%;
   top: 1rpx;
   right: 0;
   background-color: #e63240;
@@ -90,12 +123,12 @@
 .oper-share{
   position: absolute;
   width: 150rpx;
-  height: 88rpx;
+  height: 100%;
   top: 1rpx;
   right: 150rpx;
   background-color: #576b95;
   color:#FFF;
   text-align: center;
-  line-height: 88rpx;
+  line-height: 80rpx;
   z-index: 50;
 }

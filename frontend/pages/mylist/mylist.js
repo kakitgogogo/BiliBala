@@ -17,14 +17,15 @@ Page({
     isPlaying: false,
     playUi: {
       play: config.image.play,
-      playing: config.image.playing
+      playing: config.image.play
     },
     playingSrc: null,
     loadingAnimation: {},
     nomoreAnimation: {},
     recordsNum: 0,
     records: [],
-    startX: 0
+    startX: 0,
+    lastShowTime: '',
   },
   //事件处理函数
   bindViewTap: function () {
@@ -45,7 +46,7 @@ Page({
   },
   onShareAppMessage: function () {
     return {
-      title: 'Voice',
+      title: 'BiliBala',
       desc: 'Share Your Voice',
       path: '/pages/index/index'
     }
@@ -202,9 +203,9 @@ Page({
       title: '删除中'
     });
     var that = this;
-    var path = event.target.dataset.src;
+    var voiceid = event.target.dataset.voiceid;
     requests.request({
-      url: config.service.deleteUrl + '/' + path,
+      url: config.service.deleteUrl + '/' + voiceid,
       method: 'GET',
       success: function () {
         wx.hideLoading();
@@ -218,7 +219,29 @@ Page({
         wx.hideLoading();
       }
     });
-    
+  },
+
+  shareRecord: function (event) {
+    wx.showLoading({
+      title: '分享中'
+    });
+    var that = this;
+    var path = event.target.dataset.src;
+    requests.request({
+      url: config.service.shareUrl + '/' + path,
+      method: 'GET',
+      success: function () {
+        wx.hideLoading();
+        var lastVal = that.data.records[event.currentTarget.dataset.index].isShared;
+        that.data.records[event.currentTarget.dataset.index].isShared = Math.abs(lastVal-1);
+        that.setData({
+          records: that.data.records
+        });
+      },
+      fail: function () {
+        wx.hideLoading();
+      }
+    });
   }
 
 })

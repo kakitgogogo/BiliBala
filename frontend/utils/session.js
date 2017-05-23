@@ -1,12 +1,12 @@
-var SESSION_KEY = 'HARD-TO-GUESS';
+var SESSION_KEY = 'HARD-TO-GUESS-SESSION';
 
 var session = {
   get: function () {
     return wx.getStorageSync(SESSION_KEY) || null;
   },
 
-  set: function (session) {
-    wx.setStorageSync(SESSION_KEY, session);
+  set: function (value) {
+    wx.setStorageSync(SESSION_KEY, value);
   },
 
   clear: function () {

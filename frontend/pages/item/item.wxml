@@ -1,0 +1,41 @@
+<view class="page-wrapper">
+  <view class="item-wrapper">
+    <view class="item-header flex flex-row">
+      <image class="avatar flex-auto" src="{{item.avatar}}" mode="aspectFit"></image>
+      <view class="username flex-stretch">{{item.username}}</view>
+      <view class="time">{{item.createdAt}}</view>
+    </view>
+    <view class="item-content">
+      <view class="content">{{item.text}}</view>
+    </view>
+    <view class="item-buttons flex flex-row">
+      <button type="default" size="default" class="flex-auto" bindtap="play">
+        <image class="alittle-big-icon" src="{{isPlaying && item.src == playingSrc ? playUi.playing : playUi.play}}" />
+      </button>
+      <button type="default" size="default" class="flex-auto" bindtap="comment">
+        <image class="icon" src="../../images/compose.png" /><text class="num">{{ item.nComments || '' }}</text>
+      </button>
+      <button type="default" size="default" class="flex-auto" bindtap="likeItem">
+        <block wx:if="{{ item.isLike === 0 }}">
+          <image class="alittle-big-icon" src="../../images/like.png" /><text class="num">{{ item.nLikes || ''}}</text>
+        </block>
+        <block wx:else>
+          <image class="alittle-big-icon" src="../../images/liked.png" /><text class="num">{{ item.nLikes || ''}}</text>
+        </block>
+      </button>
+    </view>
+  </view>
+
+  <view class="comment-list">
+    <view class="comment" wx:for="{{comments}}" wx:for-item="comment" wx:key="{{comment.id}}"  wx:for-index="index">
+      <view class="comment-header flex flex-row">
+        <image class="avatar flex-auto" src="{{comment.avatar}}" mode="aspectFit"></image>
+        <view class="username flex-stretch">{{comment.username}}</view>
+        <view class="time">{{comment.createdAt}}</view>
+      </view>
+      <view class="comment-content">
+        <view class="content" bindtap="comment" data-voiceid="{{comment.id}}" data-index="{{index}}">{{comment.text}}</view>
+      </view>
+    </view>
+  </view>
+</view>

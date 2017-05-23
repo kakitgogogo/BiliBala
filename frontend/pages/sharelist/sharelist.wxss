@@ -1,0 +1,198 @@
+/* pages/sharelist/sharelist.wxss */
+
+page {
+  background-color: #f2f1f6;
+  height: 100%;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-auto {
+  flex: 1;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.flex-vcenter {
+  align-items: center;
+}
+
+/** fill height of parent **/
+.flex-stretch {
+  align-items: stretch;
+}
+
+.flex-center {
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  height: 100%;
+}
+
+.float-left{
+  float: left;
+}
+
+.float-right{
+  float: right;
+}
+
+
+.loading{
+  height: 50rpx;
+  text-align: center;
+}
+
+.loading image{
+  height: 50rpx;
+  width: 50rpx;
+}
+
+.no-more {
+  height: 80rpx;
+  text-align: center;
+  line-height: 80rpx;
+  background-color:  #f2f1f6;
+}
+
+.page-wrapper{
+  font-family: MicroSoft YaHei;
+  position: relative;
+}
+
+.records-list{
+  padding: 0;
+  position: fixed;
+  overflow: hidden;
+  height: 100%;
+  background: #fff;
+}
+
+.record-item {
+  border-bottom: 10rpx #f2f1f6 solid;
+  background-color: #fff;
+  color: #666;
+  position: relative;
+  display: block;
+}
+
+.item-header {
+  margin-top: 16rpx;
+  height: 80rpx;
+}
+.item-header .avatar {
+  max-width: 64rpx;
+  max-height: 64rpx;
+  border-radius: 72rpx;
+  margin: 8rpx 24rpx;
+}
+.item-header .username {
+  color: #888;
+  font-size: 30rpx;
+  font-weight: normal;
+  text-align: left;
+  line-height: 80rpx;
+  flex: 3;
+}
+.item-header .time {
+  color: #888;
+  font-size: 28rpx;
+  font-weight: normal;
+  text-align: right;
+  line-height: 80rpx;
+  padding-right: 20rpx;
+  max-width: 300rpx;
+}
+
+.item-content {
+  padding: 0rpx 28rpx 8rpx 28rpx;
+  margin-bottom: 12rpx;
+}
+.item-content .content{
+  font-size: 32rpx;
+  line-height: 42rpx;
+  padding: 8rpx 0;
+}
+
+.item-buttons{
+  padding: 0rpx;
+  z-index: 100;
+}
+.item-buttons .icon {
+  width: 42rpx;
+  height:42rpx;
+  position: absolute;
+  top: 13rpx;
+  left: 110rpx;
+}
+.item-buttons .alittle-big-icon {
+  width: 30rpx;
+  height: 30rpx;
+  position: absolute;
+  top: 20rpx;
+  left: 108rpx;
+}
+
+.item-buttons .num {
+  position: absolute;
+  left: 150rpx;
+}
+
+.item-buttons button{
+  font-size: 28rpx;
+  background: white;
+  border-radius: 0rpx;
+  border: 0rpx;
+  color: #666;
+  position: relative;
+  height: 72rpx;
+  line-height: 72rpx;
+}
+.item-buttons button::after{
+  border-radius: 0rpx;
+  border: 0rpx;
+  border-top: 1px #f3f3f3 solid;
+}
+
+.placeholder {
+  font-family: MicroSoft Yahei;
+  font-size: 26rpx;
+}
+
+.comment-area {
+  height: 72rpx;
+  padding: 10rpx 28rpx 0rpx 28rpx;
+  width: 100%;
+}
+
+.comment-area input {
+  font-family: MicroSoft Yahei;
+  font-size: 26rpx;
+  color: #666;
+  height: 72rpx;
+  width: 600rpx;
+}
+
+.comment-area .upload-comment {
+  z-index: 50;
+  height: 72rpx;
+  width: 120rpx;
+}
+
+.upload-comment image {
+  height: 30rpx;
+  width: 30rpx;
+  position: absolute;
+  bottom: 24rpx;
+  right: 60rpx;
+}

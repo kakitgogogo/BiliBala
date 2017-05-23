@@ -1,8 +1,9 @@
 {
   "pages":[
     "pages/index/index",
-    "pages/alllist/alllist",
-    "pages/mylist/mylist"
+    "pages/sharelist/sharelist",
+    "pages/mylist/mylist",
+    "pages/item/item"
   ],
   "window":{
     "backgroundTextStyle":"light",
@@ -23,7 +24,7 @@
         "selectedIconPath": "images/phone-select.png"
       },
       {
-        "pagePath": "pages/alllist/alllist",
+        "pagePath": "pages/sharelist/sharelist",
         "text": "Bala",
         "iconPath": "images/cloud-computing.png",
         "selectedIconPath": "images/cloud-select.png"

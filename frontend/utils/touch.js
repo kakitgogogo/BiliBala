@@ -39,7 +39,7 @@ function touchE(e, dataList, startX, width) {
   var left = 0;
 
   if(disX < 0) {
-    Math.abs(disX) > width / 2 ? left = -width : left = 0
+    Math.abs(disX) > width / 4 ? left = -width : left = 0
   }
   else {
     left = 0;

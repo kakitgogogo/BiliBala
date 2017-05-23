@@ -153,7 +153,7 @@ Page({
   },
   onShareAppMessage: function () {
     return {
-      title: 'Voice',
+      title: 'BiliBala',
       desc: 'Share Your Voice',
       path: '/pages/index/index'
     }

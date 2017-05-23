@@ -1,0 +1,47 @@
+<view class="page-wrapper">
+  <scroll-view class="records-list" enable-back-to-top="true" scroll-y="true" bindscrolltoupper="refreshList" bindscrolltolower="appendList" upper-threshold="0" lower-threshold="20">
+    <view class="loading" style="padding: 20rpx 0 0; height: 0; opacity: 0;" animation="{{loadingAnimation}}">
+      <image src="/images/loading.gif"></image>
+    </view>
+    <view class="record-item" wx:for="{{records}}" wx:for-item="record" wx:key="{{record.id}}"  wx:for-index="index">
+      <view class="item-header flex flex-row">
+        <image class="avatar flex-auto" src="{{record.avatar}}" mode="aspectFit"></image>
+        <view class="username flex-stretch">{{record.username}}</view>
+        <view class="time">{{record.createdAt}}</view>
+      </view>
+      <view class="item-content">
+        <view class="content" bindtap="viewItem" data-voiceid="{{record.id}}" data-index="{{index}}">{{record.text}}</view>
+      </view>
+
+      <block wx:if="{{isCommenting && record.id == commentId}}">
+        <view class="comment-area flex flex-row">
+          <input placeholder="评论..." placeholder-class="placeholder" type="text" auto-focus bindblur="inputBlur" bindinput="onInput"/>
+          <view class="upload-comment" bindtap="uploadComment" data-voiceid="{{record.id}}" data-index="{{index}}">
+            <image src="../../images/plane.png" catchtap="uploadComment" data-voiceid="{{record.id}}" data-index="{{index}}"></image>
+          </view>
+        </view>
+      </block>
+      <block wx:else>
+        <view class="item-buttons flex flex-row">
+          <button type="default" size="default" class="flex-auto" bindtap="play" data-voiceid="{{record.id}}" data-index="{{index}}" data-src="{{record.src}}">
+            <image class="alittle-big-icon" src="{{isPlaying && record.src == playingSrc ? playUi.playing : playUi.play}}" />
+          </button>
+          <button type="default" size="default" class="flex-auto" bindtap="comment" data-voiceid="{{record.id}}">
+            <image class="icon" src="../../images/compose.png" /><text class="num">{{ record.nComments || '' }}</text>
+          </button>
+          <button type="default" size="default" class="flex-auto" bindtap="likeRecord" data-voiceid="{{record.id}}" data-index="{{index}}">
+            <block wx:if="{{ record.isLike === 0 }}">
+              <image class="alittle-big-icon" src="../../images/like.png" /><text class="num">{{ record.nLikes || ''}}</text>
+            </block>
+            <block wx:else>
+              <image class="alittle-big-icon" src="../../images/liked.png" /><text class="num">{{ record.nLikes || ''}}</text>
+            </block>
+          </button>
+        </view>
+      </block>
+    </view>
+    <view class="no-more" style="padding: 20rpx: 20rpx 0 0; height: 0; opacity: 0;" animation="{{nomoreAnimation}}">
+      <text>...没有更多了</text>
+    </view>
+  </scroll-view>
+</view>

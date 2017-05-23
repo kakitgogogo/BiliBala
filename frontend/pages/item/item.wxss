@@ -1,0 +1,213 @@
+/* pages/sharelist/sharelist.wxss */
+
+page {
+  background-color: #f2f1f6;
+  height: 100%;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-auto {
+  flex: 1;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.flex-vcenter {
+  align-items: center;
+}
+
+/** fill height of parent **/
+.flex-stretch {
+  align-items: stretch;
+}
+
+.flex-center {
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  height: 100%;
+}
+
+.float-left{
+  float: left;
+}
+
+.float-right{
+  float: right;
+}
+
+
+.loading{
+  height: 50rpx;
+  text-align: center;
+}
+
+.loading image{
+  height: 50rpx;
+  width: 50rpx;
+}
+
+.no-more {
+  height: 80rpx;
+  text-align: center;
+  line-height: 80rpx;
+  background-color:  #f2f1f6;
+}
+
+.page-wrapper{
+  font-family: MicroSoft YaHei;
+  position: relative;
+}
+
+.item-wrapper {
+  border-bottom: 18rpx #f2f1f6 solid;
+  background-color: #fff;
+  color: #666;
+  position: fix;
+  display: block;
+  overflow: hidden;
+  padding: 0;
+  height: 100%;
+}
+
+.item-header {
+  margin-top: 16rpx;
+  height: 80rpx;
+}
+.item-header .avatar {
+  max-width: 64rpx;
+  max-height: 64rpx;
+  border-radius: 72rpx;
+  margin: 8rpx 24rpx;
+}
+.item-header .username {
+  color: #888;
+  font-size: 30rpx;
+  font-weight: normal;
+  text-align: left;
+  line-height: 80rpx;
+  flex: 3;
+}
+.item-header .time {
+  color: #888;
+  font-size: 28rpx;
+  font-weight: normal;
+  text-align: right;
+  line-height: 80rpx;
+  padding-right: 20rpx;
+  max-width: 300rpx;
+}
+
+.item-content {
+  padding: 0rpx 28rpx 8rpx 28rpx;
+  margin-bottom: 12rpx;
+}
+.item-content .content{
+  font-size: 32rpx;
+  line-height: 42rpx;
+  padding: 8rpx 0;
+}
+
+.item-buttons{
+  padding: 0rpx;
+}
+.item-buttons .icon {
+  width: 42rpx;
+  height:42rpx;
+  position: absolute;
+  top: 13rpx;
+  left: 110rpx;
+}
+.item-buttons .alittle-big-icon {
+  width: 30rpx;
+  height: 30rpx;
+  position: absolute;
+  top: 20rpx;
+  left: 108rpx;
+}
+
+.item-buttons .num {
+  position: absolute;
+  left: 150rpx;
+}
+
+.item-buttons button{
+  font-size: 28rpx;
+  background: white;
+  border-radius: 0rpx;
+  border: 0rpx;
+  color: #666;
+  position: relative;
+  height: 72rpx;
+  line-height: 72rpx;
+}
+.item-buttons button::after{
+  border-radius: 0rpx;
+  border: 0rpx;
+  border-top: 1px #f3f3f3 solid;
+}
+
+/* comment */
+.comment-list {
+  font-family: MicroSoft YaHei;
+  position: relative;
+}
+
+.comment {
+  border-bottom: 4rpx #f2f1f6 solid;
+  background-color: #fff;
+  color: #666;
+  display: block;
+  overflow: hidden;
+  padding: 0;
+  height: 100%;
+}
+
+.comment-header {
+  margin-top: 16rpx;
+  height: 60rpx;
+}
+.comment-header .avatar {
+  max-width: 40rpx;
+  max-height: 40rpx;
+  border-radius: 60rpx;
+  margin: 8rpx 24rpx;
+}
+.comment-header .username {
+  color: #888;
+  font-size: 23rpx;
+  font-weight: normal;
+  text-align: left;
+  line-height: 60rpx;
+  flex: 3;
+}
+.comment-header .time {
+  color: #888;
+  font-size: 23rpx;
+  font-weight: normal;
+  text-align: right;
+  line-height: 60rpx;
+  padding-right: 20rpx;
+  max-width: 300rpx;
+}
+
+.comment-content {
+  padding: 0rpx 28rpx 8rpx 28rpx;
+  margin-bottom: 12rpx;
+}
+.comment-content .content{
+  font-size: 28rpx;
+  line-height: 42rpx;
+  padding: 8rpx 0;
+}
