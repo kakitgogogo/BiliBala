@@ -25,7 +25,7 @@ Page({
     },
     uploadUi: {
       upload: config.image.upload,
-      uploaing: config.image.uploading
+      uploading: config.image.uploading
     },
     duration: 0,
     maxDuration: 60,
@@ -119,7 +119,7 @@ Page({
   },
   uploadRecord: function () {
     var that = this;
-    if(that.data.isUploadDone) {
+    if (that.data.isUploadDone || that.data.isUploading) {
       console.log('重复上传错误');
       return;
     }

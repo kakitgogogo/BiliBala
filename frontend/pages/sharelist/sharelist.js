@@ -7,6 +7,7 @@ var requests = require('../../utils/request');
 var play = require('../../utils/play');
 var session = require('../../utils/session');
 var misc = require('../../utils/misc');
+var base64 = require('../../utils/base64');
 
 var tempFile = new Map();
 
@@ -39,6 +40,8 @@ Page({
         userInfo: userInfo
       })
     });
+  },
+  onShow: function () {
     this.getRecords(true);
   },
   onShareAppMessage: function () {
@@ -51,21 +54,20 @@ Page({
 
   refreshList: function () {
     console.log('触顶');
-    var that = this;
-    that.getRecords(true);
+    this.getRecords(true);
   },
 
   appendList: function () {
     console.log("触底");
-    var that = this;
-    if (!that.data.nomore) {
-      that.getRecords(false);
+    if (!this.data.nomore) {
+      this.getRecords(false);
     }
   },
 
   viewItem: function (event) {
     var idx = event.currentTarget.dataset.index;
     misc.dataStorage.set(this.data.records[idx]);
+    wx.setStorageSync('needRefresh', true);
     wx.navigateTo({
       url: '../item/item?id=' + event.target.dataset.voiceid,
     })
@@ -150,6 +152,11 @@ Page({
         that.setData({
           loadingAnimation: hideAnimation.export(),
         });
+
+        records = records.map(function (r) {
+          r.text = base64.decode(r.text);
+          return r;
+        });
         that.setData({
           recordsNum: that.data.recordsNum + nums,
           records: that.data.records.concat(records)
@@ -227,29 +234,27 @@ Page({
   },
 
   onInput: function (event) {
-    this.setData({
-      lastComment: event.detail.value,
-    });
   },
 
-  uploadComment: function (event) {
+  onSubmit: function (event) {
     var that = this;
     var id = event.target.dataset.voiceid;
     var url = config.service.commentUrl + '/' + id;
     var idx = event.currentTarget.dataset.index;
     var lastVal = that.data.records[idx].nComments;
-    //console.log(id, that.data.lastComment);
     requests.request({
       url: url,
       method: 'POST',
       data: {
         session: session.get().sessionKey,
-        comment: that.data.lastComment,
+        comment: base64.encode(event.detail.value.content),
+        tousername: '',
       },
       success(result) {
         console.log(result);
         that.data.records[idx].nComments = lastVal+1;
         that.setData({
+          isCommenting: 0,
           records: that.data.records
         });
       },

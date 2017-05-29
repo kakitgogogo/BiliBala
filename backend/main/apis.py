@@ -1,4 +1,4 @@
-from flask import Blueprint, Response, Flask, render_template, jsonify, request
+from flask import Blueprint, Response, Flask, render_template, jsonify, request, current_app
 from werkzeug import secure_filename
 from . import main
 from .WXBizDataCrypt import WXBizDataCrypt
@@ -11,6 +11,7 @@ import time
 import uuid
 import hashlib
 import requests
+import base64
 
 conn = pymysql.connect(
 	host='localhost',
@@ -27,6 +28,9 @@ secret = configs['weixin']['secret']
 
 last_get_token_time = 0
 token = ''
+
+def debug(msg='', e=''): 
+	current_app.logger.debug(msg+'; '+str(e))
 
 def next_id():
 	return '%015d%s000' % (int(time.time() * 1000), uuid.uuid4().hex)
@@ -54,16 +58,15 @@ def time_format(timenum, isDetail=True):
 
 @main.route('/')
 def index():
+	debug('haha', FileNotFoundError('huhu'))
 	return render_template('index.html')
 
 @main.route('/login/voice', methods=['POST'])
 def login_voice():
 	data = json.loads(request.get_data())
-	print(data)
 	if data:
 		cur = conn.cursor()
 		user_info = get_user_info(data['code'], data['encrytedData'], data['iv'])
-		print(user_info)
 		uid = user_info['openId']
 		nickname = user_info['nickName']
 		avatar = user_info['avatarUrl']
@@ -72,12 +75,13 @@ def login_voice():
 			cur.execute(sqli, (uid, avatar))
 			cur.close()
 			conn.commit()
-		except:
-			print('新增用户失败或用户已存在')
+		except Exception as e:
+			debug('新增用户失败或用户已存在', e)
 			conn.rollback()
 
 		return jsonify({"status":0, "sessionKey":uid, "msg":"登录成功"})
 
+	debug('无请求内容')
 	return jsonify({"status":1, "msg":"登录失败"})
 
 @main.route('/voice/<voiceid>')
@@ -116,7 +120,8 @@ def delete_voice(voiceid):
 		os.remove(filepath)
 
 		return jsonify({"status":0, "msg":"删除成功"})
-	except:
+	except Exception as e:
+		debug('删除失败', e)
 		conn.rollback()
 		return jsonify({"status":1, "msg":"删除失败"})
 
@@ -133,9 +138,27 @@ def share_voice(voiceid):
 		conn.commit()
 
 		return jsonify({"status":0, "msg":"分享成功"})
-	except:
+	except Exception as e:
+		debug('分享失败', e)
 		conn.rollback()
 		return jsonify({"status":1, "msg":"分享失败"})
+
+@main.route('/edit/voice/<voiceid>', methods=['POST'])
+def edit_voice(voiceid):
+	data = json.loads(request.get_data())
+	debug(str(data))
+	try:
+		cur = conn.cursor()
+		sqlu = 'update voices set `text`="{}" where id=%s;'.format(data['text'])
+		cur.execute(sqlu, (voiceid,))
+		cur.close()
+		conn.commit()
+
+		return jsonify({"status":0, "msg":"更改成功"})
+	except Exception as e:
+		debug('更改失败', e)
+		conn.rollback()
+		return jsonify({"status":1, "msg":"更改失败"})
 
 @main.route('/like/voice/<voiceid>', methods=['POST'])
 def like_voice(voiceid):
@@ -166,8 +189,8 @@ def like_voice(voiceid):
 
 			conn.commit()		
 		return jsonify({"status":0, "msg":"点赞成功"})
-	except:
-		print('点赞失败')
+	except Exception as e:
+		debug('点赞失败', e)
 		conn.rollback()
 		return jsonify({"status":1, "msg":"点赞失败"})
 
@@ -178,7 +201,7 @@ def comment_voice(voiceid):
 	unique_id = next_id()
 	try:
 		cur = conn.cursor()
-		sqli = 'insert into comments values("{}", "{}", "{}", "{}", {});'.format(unique_id, data['session'], voiceid, data['comment'], time.time())
+		sqli = 'insert into comments values("{}", "{}", "{}", "{}", {}, "{}");'.format(unique_id, data['session'], voiceid, data['comment'], time.time(), data['tousername'])
 		cur.execute(sqli)
 		cur.close()
 
@@ -189,24 +212,24 @@ def comment_voice(voiceid):
 
 		conn.commit()
 		return jsonify({"status":0, "msg":"评论成功"})
-	except:
-		print('评论失败')
+	except Exception as e:
+		debug('评论失败', e)
 		conn.rollback()
 		return jsonify({"status":1, "msg":"评论失败"})
 
 # content_type='multipart/form-data'
 @main.route('/upload/voice', methods=['POST'])
 def upload_voice():
-	#print(request.form)
-	file = request.files['voice']
-	userid = request.form['session']
-	unique_id = next_id()
-	if file:
+	try:
+		file = request.files['voice']
+		userid = request.form['session']
+		unique_id = next_id()
+
 		filepath = 'voice/'+unique_id+'.silk'
 		file.save(filepath)
 
 		text = get_voice_text(filepath)
-		text = text[:-1]
+		text = base64.b64encode(text[:-1].encode(encoding='utf-8')).decode(encoding='utf-8')
 
 		cur = conn.cursor()
 		sqli = 'insert into voices values("{}", "{}", "{}", "{}", {}, 0, 0, 0);'.format(unique_id, userid, filepath, text, time.time())
@@ -215,8 +238,10 @@ def upload_voice():
 		conn.commit()
 
 		return jsonify({"status":0, "msg":"上传成功"})
-
-	return jsonify({"status":1, "msg":"上传失败"})
+	except Exception as e:
+		debug('上传失败', e)
+		conn.rollback()
+		return jsonify({"status":1, "msg":"上传失败"})
 
 
 @main.route('/upload/image',  methods=['POST'])
@@ -231,9 +256,9 @@ def upload_image():
 @main.route('/view/voice', methods=['POST'])
 def view_voice():
 	data = json.loads(request.get_data())
-	print(data)
-	if data['session']:
+	try:
 		cur = conn.cursor()
+		userid = data['session']
 		userid = data['session']
 		sqls = 'select id, path, text, created_at, is_shared from voices where userid="{}" order by created_at desc limit {}, {};'.format(userid, data['index'], data['number'])
 		cur.execute(sqls)
@@ -257,14 +282,15 @@ def view_voice():
 		cur.close()
 		conn.commit()
 		return jsonify({"status":0, "data": datalist, "number":cnt, "msg":"请求成功"})
-
-	return jsonify({"status":1, "msg":"请求失败"})
+	except Exception as e:
+		debug('请求失败', e)
+		conn.rollback()
+		return jsonify({"status":1, "msg":"请求失败"})
 
 @main.route('/viewall/voice', methods=['POST'])
 def view_all_voice():
 	data = json.loads(request.get_data())
-	print(data)
-	if data['session']:
+	try:
 		cur = conn.cursor()
 		sqls = 'select voices.id, voices.path, voices.text, voices.created_at, voices.n_comments, voices.n_likes, users.nickname, users.avatar from voices, users where voices.userid=users.id and voices.is_shared=1 order by voices.created_at desc limit {}, {};'.format(data['index'], data['number'])
 		cur.execute(sqls)
@@ -295,16 +321,17 @@ def view_all_voice():
 		cur.close()
 		conn.commit()
 		return jsonify({"status":0, "data":datalist, "number":cnt, "msg":"请求成功"})
-
-	return jsonify({"status":1, "msg":"请求失败"})
+	except Exception as e:
+		debug('请求失败', e)
+		conn.rollback()
+		return jsonify({"status":1, "msg":"请求失败"})
 
 @main.route('/comments/voice/<voiceid>', methods=['POST'])
 def comments_voice(voiceid):
 	data = json.loads(request.get_data())
-	print(data)
 	try:
 		cur = conn.cursor()
-		sqls = 'select comments.id, comments.text, comments.created_at, users.id, users.nickname, users.avatar from comments, users where comments.voiceid=%s and comments.userid=users.id order by comments.created_at desc limit {}, {};'.format(data['index'], data['number'])
+		sqls = 'select comments.id, comments.text, comments.created_at, users.id, users.nickname, users.avatar, comments.tousername from comments, users where comments.voiceid=%s and comments.userid=users.id order by comments.created_at desc;'
 		cur.execute(sqls, (voiceid, ))
 		datalist = []
 		cnt = 0
@@ -316,11 +343,15 @@ def comments_voice(voiceid):
 			item['userid'] = p[3]
 			item['username'] = p[4]
 			item['avatar'] = p[5]
+			item['tousername'] = p[6]
 
 			datalist.append(item)
 			cnt = cnt + 1
 		cur.close()
 		conn.commit()
 		return jsonify({"status":0, "data":datalist, "number":cnt, "msg":"请求成功"})
-	except:
+	except Exception as e:
+		debug('请求失败', e)
+		conn.rollback()
 		return jsonify({"status":1, "msg":"请求失败"})
+

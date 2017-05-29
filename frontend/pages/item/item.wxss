@@ -74,7 +74,6 @@ page {
   border-bottom: 18rpx #f2f1f6 solid;
   background-color: #fff;
   color: #666;
-  position: fix;
   display: block;
   overflow: hidden;
   padding: 0;

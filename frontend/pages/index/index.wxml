@@ -30,7 +30,7 @@
         <image style="width:{{uploadRadius}}rpx; height:{{uploadRadius}}rpx" src="{{isUploading?uploadUi.uploading:uploadUi.upload}}"></image>
       </view>
       <view class="tip">
-        <text>上传{{isUploadDone?"成功":""}}</text>
+        <text>上传{{isUploadDone?"成功":""}}{{isUploading?"中...":""}}</text>
       </view>
     </view>
   </view>

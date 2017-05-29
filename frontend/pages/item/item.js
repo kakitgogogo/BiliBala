@@ -3,6 +3,7 @@ var requests = require('../../utils/request');
 var play = require('../../utils/play');
 var session = require('../../utils/session');
 var misc = require('../../utils/misc');
+var base64 = require('../../utils/base64');
 
 var tempFile = new Map();
 
@@ -20,25 +21,32 @@ Page({
       play: '../../images/play-button.png',
       playing: '../../images/playing.png'
     },
+    comments: [],
+    commentsNum: 0,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (option) {
+    var item = misc.dataStorage.get();
     this.setData({
       voiceId: option.id,
-      item: misc.dataStorage.get(),
-    })
-    this.getComments(true);
+      item: item,
+      commentsNum: item.nComments,
+    });
   },
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
   onUnload: function () {
     console.log('exit item page');
     misc.dataStorage.clear();
+  },
+
+  onShow: function () {
+    var needRefresh = wx.getStorageSync('needRefresh');
+    if (needRefresh) {
+      this.getComments();
+    }
   },
 
   /**
@@ -50,20 +58,6 @@ Page({
       desc: 'Share Your Voice',
       path: '/pages/index/index'
     };
-  },
-
-  refreshList: function () {
-    console.log('触顶');
-    var that = this;
-    that.getComments(true);
-  },
-
-  appendList: function () {
-    console.log("触底");
-    var that = this;
-    if (!that.data.nomore) {
-      that.getComments(false);
-    }
   },
 
   play: function (event) {
@@ -97,23 +91,14 @@ Page({
   },
 
   //请求页面数据
-  getComments: function (isFresh) {
+  getComments: function () {
     var that = this;
-    if (isFresh) {
-      that.setData({
-        commentsNum: 0,
-        comments: [],
-        nomore: false,
-      });
-    }
     var url = config.service.viewCommentsUrl + '/' + that.data.item.id;
     requests.request({
       url: url,
       method: 'POST',
       data: {
-        session: session.get().sessionKey,
-        index: that.data.commentsNum,
-        number: 10
+        session: session.get().sessionKey
       },
       success(result) {
         var nums = result.data.number;
@@ -123,9 +108,13 @@ Page({
             nomore: true,
           })
         }
+        comments = comments.map(function (r) {
+          r.text = base64.decode(r.text);
+          return r;
+        });
         that.setData({
-          commentsNum: that.data.commentsNum + nums,
-          comments: that.data.comments.concat(comments)
+          commentsNum: nums,
+          comments: comments
         });
         console.log('载入成功:', result);
       },
@@ -184,4 +173,14 @@ Page({
       }
     });
   },
+
+  comment: function (event) {
+    var urlTail = '';
+    if (event.target.dataset.username) {
+      urlTail = '&tousername=' + event.target.dataset.username;
+    }
+    wx.navigateTo({
+      url: '../publish/publish?voiceid=' + this.data.item.id + urlTail,
+    })
+  }
 })

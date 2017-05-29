@@ -132,14 +132,14 @@ page {
   width: 42rpx;
   height:42rpx;
   position: absolute;
-  top: 13rpx;
+  top: 14rpx;
   left: 110rpx;
 }
 .item-buttons .alittle-big-icon {
-  width: 30rpx;
-  height: 30rpx;
+  width: 28rpx;
+  height: 28rpx;
   position: absolute;
-  top: 20rpx;
+  top: 22rpx;
   left: 108rpx;
 }
 
@@ -175,7 +175,7 @@ page {
   width: 100%;
 }
 
-.comment-area input {
+.comment-area textarea {
   font-family: MicroSoft Yahei;
   font-size: 26rpx;
   color: #666;
@@ -186,13 +186,21 @@ page {
 .comment-area .upload-comment {
   z-index: 50;
   height: 72rpx;
-  width: 120rpx;
+  width: 110rpx;
+  border-radius: 0rpx;
+  border: 0rpx;
+  background: white;
+}
+
+.comment-area button::after{
+  border-radius: 0rpx;
+  border: 0rpx;
 }
 
 .upload-comment image {
   height: 30rpx;
   width: 30rpx;
   position: absolute;
-  bottom: 24rpx;
-  right: 60rpx;
+  top: 10rpx;
+  right: 50rpx;
 }

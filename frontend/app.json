@@ -1,9 +1,10 @@
 {
   "pages":[
     "pages/index/index",
+    "pages/item/item",
     "pages/sharelist/sharelist",
     "pages/mylist/mylist",
-    "pages/item/item"
+    "pages/publish/publish"
   ],
   "window":{
     "backgroundTextStyle":"light",

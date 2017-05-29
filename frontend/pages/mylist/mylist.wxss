@@ -88,7 +88,16 @@
   left: 110rpx;
   top: 22rpx;
   width: 80%;
+  line-height: 37rpx;
   text-overflow: ellipsis;
+}
+.record-wrapper textarea {
+  display: block;
+  position: absolute;
+  left: 110rpx;
+  top: 22rpx;
+  width: 80%;
+  height: 110rpx;
 }
 
 .oper-wrapper{

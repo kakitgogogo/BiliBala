@@ -1,0 +1,4 @@
+#!/bin/bash
+
+nohup /usr/python3/bin/gunicorn -c guni.cnf.py run:app &
+

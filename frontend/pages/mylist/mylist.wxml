@@ -13,9 +13,14 @@
         <view class="time-wrapper">{{record.createdAt}}</view>
       </block>
       <view class="item-wrapper">
-        <view class="record-wrapper" data-index="{{index}}" data-src="{{record.src}}" bindtouchstart="touchS" bindtouchmove="touchM" bindtouchend="touchE" bindlongtap="editText" style="left:{{record.left+'rpx'}}; {{isPlaying&&record.src==playingSrc?'background: rgb(233,233,233)':'background: white'}};">
+        <view class="record-wrapper" data-index="{{index}}" data-src="{{record.src}}" data-voiceid="{{record.id}}" bindtouchstart="touchS" bindtouchmove="touchM" bindtouchend="touchE" bindlongtap="editText" style="left:{{record.left+'rpx'}}; {{isPlaying&&record.src==playingSrc?'background: rgb(233,233,233)':'background: white'}};">
           <image src="{{isPlaying && record.src == playingSrc ? playUi.playing : playUi.play}}" data-index="{{index}}" data-src="{{record.src}}" bindtap="play"></image>
-          <text>{{record.text}}</text>
+          <block wx:if="{{isEditing && editId == record.id}}">
+            <textarea value="{{record.text}}" bindblur="editCancel" bindconfirm="editDone" bindinput="onEdit" data-index="{{index}}" data-voiceid="{{record.id}}" auto-focus="true"/>
+          </block>
+          <block wx:else>
+            <text catchlongtap="editText"  data-voiceid="{{record.id}}">{{record.text}}</text>
+          </block>
         </view>
         <view class="oper-wrapper">
           <view class="oper-delete" bindtap="deleteRecord" data-index="{{index}}" data-voiceid="{{record.id}}">删除<image class="oper-image" src="../../images/garbage.png" catchtap="deleteRecord" data-index="{{index}}" data-voiceid="{{record.id}}"></image></view>

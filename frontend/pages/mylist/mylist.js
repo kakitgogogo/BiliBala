@@ -7,6 +7,7 @@ var requests = require('../../utils/request');
 var play = require('../../utils/play');
 var session = require('../../utils/session');
 var touch = require('../../utils/touch');
+var base64 = require('../../utils/base64');
 
 var tempFile = new Map();
 
@@ -26,6 +27,8 @@ Page({
     records: [],
     startX: 0,
     lastShowTime: '',
+    isEditing: 0,
+    editId: null,
   },
   //事件处理函数
   bindViewTap: function () {
@@ -54,15 +57,13 @@ Page({
 
   refreshList: function () {
     console.log('触顶');
-    var that = this;
-    that.getRecords(true);
+    this.getRecords(true);
   },
 
   appendList: function () {
     console.log("触底");
-    var that = this;
-    if(!that.data.nomore) {
-      that.getRecords(false);
+    if(!this.data.nomore) {
+      this.getRecords(false);
     }
   },
 
@@ -161,6 +162,11 @@ Page({
         that.setData({
           loadingAnimation: hideAnimation.export(),
         });
+
+        records = records.map(function (r) {
+          r.text = base64.decode(r.text);
+          return r;
+        });
         that.setData({
           recordsNum: that.data.recordsNum + nums,
           records: that.data.records.concat(records)
@@ -242,6 +248,51 @@ Page({
         wx.hideLoading();
       }
     });
-  }
+  },
+
+  editText: function (event) {
+    var id = event.target.dataset.voiceid;
+    console.log('edit');
+    this.setData({
+      isEditing: 1,
+      editId: id,
+    })
+  },
+
+  onEdit: function (event) {
+
+  },
+
+  editDone: function (event) {
+    var idx = event.currentTarget.dataset.index;
+    this.setData({
+      isEditing: 0,
+    });
+    var that = this;
+    var voiceid = event.target.dataset.voiceid;
+    requests.request({
+      url: config.service.editUrl + '/' + voiceid,
+      method: 'POST',
+      data: {
+        text: base64.encode(event.detail.value),
+      },
+      success: function () {
+        that.data.records[idx].text = event.detail.value;
+        that.setData({
+          recordsNum: that.data.recordsNum - 1,
+          records: that.data.records
+        });
+      },
+      fail: function (error) {
+        console.log('更改失败:', error);
+      }
+    });
+  },
+
+  editCancel: function (event) {
+    this.setData({
+      isEditing: 0,
+    })
+  },
 
 })

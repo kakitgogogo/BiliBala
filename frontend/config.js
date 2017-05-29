@@ -7,7 +7,7 @@ module.exports = {
     play: "/images/talk.png",
     playing: "/images/talk.png",
     upload: "/images/transfer.png",
-    uploading: "/images/loading.gif"
+    uploading: "/images/transfer.png"
   },
   service: {
     host: host,
@@ -29,6 +29,9 @@ module.exports = {
 
     //点赞接口
     likeUrl: 'https://kakit.top/like/voice',
+
+    //更改接口
+    editUrl: 'https://kakit.top/edit/voice',
 
     // 查看接口
     viewUrl: 'https://kakit.top/view/voice',

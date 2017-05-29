@@ -9,17 +9,19 @@
         <view class="username flex-stretch">{{record.username}}</view>
         <view class="time">{{record.createdAt}}</view>
       </view>
-      <view class="item-content">
-        <view class="content" bindtap="viewItem" data-voiceid="{{record.id}}" data-index="{{index}}">{{record.text}}</view>
+      <view class="item-content" bindtap="viewItem" data-voiceid="{{record.id}}" data-index="{{index}}">
+        <text class="content" catchtap="viewItem" data-voiceid="{{record.id}}" data-index="{{index}}">{{record.text}}</text>
       </view>
 
       <block wx:if="{{isCommenting && record.id == commentId}}">
+      <form catchsubmit="onSubmit" data-voiceid="{{record.id}}" data-index="{{index}}">
         <view class="comment-area flex flex-row">
-          <input placeholder="评论..." placeholder-class="placeholder" type="text" auto-focus bindblur="inputBlur" bindinput="onInput"/>
-          <view class="upload-comment" bindtap="uploadComment" data-voiceid="{{record.id}}" data-index="{{index}}">
-            <image src="../../images/plane.png" catchtap="uploadComment" data-voiceid="{{record.id}}" data-index="{{index}}"></image>
-          </view>
+          <textarea placeholder="评论..." placeholder-class="placeholder" type="text" auto-focus="true" bindblur="inputBlur" name="content"/>
+          <button form-type="submit" class="upload-comment">
+            <image src="../../images/plane.png"></image>
+          </button>
         </view>
+        </form>
       </block>
       <block wx:else>
         <view class="item-buttons flex flex-row">

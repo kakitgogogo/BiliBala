@@ -19,7 +19,7 @@ create table users (
 
 create table voices (
 	`id` varchar(50) not null,
-	`userid` varchar(50) not null,
+	`userid` varchar(50) not null references users(`id`),
 	`path` varchar(100) not null,
 	`text` text not null,
 	`created_at` real not null,
@@ -32,17 +32,19 @@ create table voices (
 
 create table comments (
 	`id` varchar(50) not null,
-	`userid` varchar(50) not null,
-	`voiceid` varchar(50) not null,
+	`userid` varchar(50) not null references users(`id`),
+	`voiceid` varchar(50) not null references voices(`id`),
+	`to_userid` varchar(50),
 	`text` text not null,
 	`created_at` real not null,
 	key (`created_at`),
+	key (`voiceid`, `userid`) ,
 	primary key (`id`) 
 ) engine=innodb default charset=utf8;
 
 create table likes (
-	`userid` varchar(50) not null,
-	`voiceid` varchar(50) not null,
+	`userid` varchar(50) not null references users(`id`),
+	`voiceid` varchar(50) not null references voices(`id`),
 	`created_at`  real not null,
 	key (`created_at`),
 	primary key (`userid`, `voiceid`) 

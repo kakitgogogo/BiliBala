@@ -1,0 +1,12 @@
+.page-wrapper {
+  background-color: #fff;
+  padding: 10rpx 25rpx;
+  font-family: MicroSoft YaHei;
+}
+.btn-area {
+  padding: 20rpx 25rpx;
+}
+textarea {
+  width: 700rpx;
+  padding: 25rpx 0;
+}

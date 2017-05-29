@@ -1,0 +1,13 @@
+<view class="page-wrapper">
+  <form catchsubmit="onSubmit">
+    <view class="page-section">
+      <view class="textarea-wrap">
+        <textarea placeholder="{{placeholder}}" placeholder-style="color:#888" focus="{{focus}}" style="height: 350rpx" name="content" bindblur="onBlur"/>
+      </view>
+    </view>
+
+    <view class="btn-area">
+      <button type="primary" formType="submit" style="background-color: #576b95">发布</button>
+    </view>
+  </form>
+</view>
